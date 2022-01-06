@@ -18,7 +18,6 @@ router.post("/", AdminWebAuth, async (request, response) => {
 
   const CreateUserInstance = new User({
     Name: request.body.Name,
-    email: request.body.email,
     username: request.body.username,
     password: request.body.password,
     roles: request.body.username,

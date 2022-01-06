@@ -18,12 +18,6 @@ const UserSchema = mongoose.Schema({
     minlength: 8,
     maxlength: 250,
   },
-  email: {
-    type: String,
-    required: true,
-    //can add a regex here to match
-    unique: true,
-  },
   roles: {
     type: [String],
     default: ["user"],
@@ -42,6 +36,23 @@ const UserSchema = mongoose.Schema({
       message: "Invalid roles",
     },
   },
+
+  NumberOfRecordsCollected: {
+    type: Number,
+    default: 0,
+  },
+
+  DateJoined: {
+    type: Date,
+    default: Date.now,
+  },
+
+  gender: {
+    type: String,
+  },
+  //no of records collected
+  // date joined
+  // gender
 });
 
 //method to generating a jwt token
