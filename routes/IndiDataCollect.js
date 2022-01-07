@@ -2,8 +2,8 @@ const Express = require("express");
 const AuthMobile = require("../Middleware/AuthMobile");
 const router = Express.Router();
 const VillageModel = require("../Models/villageInfo");
-const PersonalDataModel = require("../models/PersonalData");
-const FamilyCommonDataModel = require("../models/FamilyCommonModel");
+const PersonalDataModel = require("../Models/PersonalData");
+const FamilyCommonDataModel = require("../Models/FamilyCommonModel");
 // const _ = require("lodash");
 
 function GetFamilyNumberFromUIN(UIN) {
