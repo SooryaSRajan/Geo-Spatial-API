@@ -50,9 +50,6 @@ const UserSchema = mongoose.Schema({
   gender: {
     type: String,
   },
-  //no of records collected
-  // date joined
-  // gender
 });
 
 //method to generating a jwt token

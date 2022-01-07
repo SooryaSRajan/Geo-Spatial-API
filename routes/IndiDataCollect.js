@@ -18,6 +18,7 @@ function FormatNumberasThreeDigit(number) {
   }
   return number;
 }
+
 async function GenerateUINForFamily(VillageCode) {
   //querying for the last modified UIN
   const village = await VillageModel.find({ villageCode: VillageCode });

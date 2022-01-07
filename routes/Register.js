@@ -21,6 +21,7 @@ router.post("/", AdminWebAuth, async (request, response) => {
     username: request.body.username,
     password: request.body.password,
     roles: request.body.username,
+    //two added fields pending
   });
 
   //encrypting the user password before saving to the database
@@ -33,7 +34,7 @@ router.post("/", AdminWebAuth, async (request, response) => {
   //save into the database
   const UserRegistered = await CreateUserInstance.save();
 
-  response.status(201).send("Regitration Successful. Please Login");
+  response.status(201).send("Registration Successful. Please Login");
 });
 
 module.exports = router;
