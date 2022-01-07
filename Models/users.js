@@ -24,12 +24,9 @@ const UserSchema = mongoose.Schema({
     validate: {
       validator: function (array) {
         var isValid = true;
+        var roles = ["user", "admin", "admin-web"];
         for (var i = 0; i < array.length; i++) {
-          if (array[i] in ["user", "admin", "admin-web"]) {
-            isValid = true;
-          } else {
-            isValid = false;
-          }
+          roles.includes(array[i]) ? (isValid = true) : (isValid = false);
         }
         return isValid;
       },
