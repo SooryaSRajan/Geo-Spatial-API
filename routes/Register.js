@@ -21,6 +21,7 @@ router.post("/", async (request, response) => {
     username: request.body.username,
     password: request.body.password,
     roles: request.body.username,
+    gender: request.body.gender,
     //two added fields pending
   });
 
