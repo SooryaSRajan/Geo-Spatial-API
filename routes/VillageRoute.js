@@ -2,7 +2,7 @@ const Express = require("express");
 const router = Express.Router();
 const AuthMobile = require("../Middleware/AuthMobile");
 const AdminWebAuth = require("../Middleware/AdminWebAuth");
-const Village = require("../models/VillageRoute");
+const Village = require("../Models/villageInfo");
 const _ = require("lodash");
 
 router.post("/", AdminWebAuth, async (request, response) => {

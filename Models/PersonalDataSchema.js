@@ -17,7 +17,7 @@ const PersonData = new mongoose.Schema({
 
   gender: String,
 
-  educationalQualification: [String],
+  educationalQualification: String,
 
   phoneNumber: String,
 
@@ -29,7 +29,7 @@ const PersonData = new mongoose.Schema({
 
   occupation: [String],
 
-  isADailyWageWorker: Boolean,
+  isADailyWageWorker: String,
 
   incomePerDay: String,
 
@@ -39,23 +39,25 @@ const PersonData = new mongoose.Schema({
 
   maritalStatus: String,
 
-  specialSkills: String,
+  specialSkills: [String],
 
-  frequentHealthAilments: String,
+  frequentHealthAilments: [String],
 
-  communicableDiseases: String,
+  communicableDiseases: [String],
 
-  nonCommunicableDiseases: String,
+  nonCommunicableDiseases: [String],
 
   surgeriesUndergone: String,
 
-  anganwadiServicesRendered: String,
+  anganwadiServicesAware: String,
 
-  anganwadiServicesUtilised: String,
+  anganwadiServicesUsed: String,
+
+  anganwadiServicesUtilised: [String],
 
   phcServicesUtilised: String,
 
-  privateHealthClinicFacilitiesUsed: String,
+  privateHealthClinicFacilitiesUsed: [String],
 
   reasonsForVisitingPrivateHealthClinic: String,
 

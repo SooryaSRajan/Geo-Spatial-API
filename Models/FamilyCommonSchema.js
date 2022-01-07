@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const FamilyDataSchema = new mongoose.Schema({
   availabilityOfDrinkingWater: String,
 
-  drinkingWaterSource: String,
+  drinkingWaterSource: [String],
 
   areToiletsAvailableInHouse: String,
 
@@ -15,15 +15,15 @@ const FamilyDataSchema = new mongoose.Schema({
 
   numberOfTwoWheelers: String,
 
-  brandsOfTwoWheelers: String,
+  brandsOfTwoWheelers: [String],
 
   numberOfThreeWheelers: String,
 
-  brandsOfThreeWheelers: String,
+  brandsOfThreeWheelers: [String],
 
   numberOfFourWheelers: String,
 
-  brandsOfFourWheelers: String,
+  brandsOfFourWheelers: [String],
 
   doYouOwnCattle: String,
 
@@ -31,19 +31,19 @@ const FamilyDataSchema = new mongoose.Schema({
 
   doYouOwnFarmLand: String,
 
-  cropsCultivated: String,
+  cropsCultivated: [String],
 
-  doYouPreserveSeeds: String,
+  doYouPreserveSeeds: [String],
 
-  typesOfSeedsPreserved: String,
+  typesOfSeedsPreserved: [String],
 
-  locallyAvailableFoodsConsumed: String,
+  locallyAvailableFoodsConsumed: [String],
 
-  treesOwnedIfAny: String,
+  treesOwnedIfAny: [String],
 
   isKitchenGardenAvailable: String,
 
-  cropsInKitchenGarden: String,
+  cropsInKitchenGarden: [String],
 
   address: String,
 

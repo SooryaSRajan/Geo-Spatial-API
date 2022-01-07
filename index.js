@@ -1,5 +1,5 @@
 const Express = require("express");
-const DBConnection = require("./configs/DatabaseConnection");
+const DBConnection = require("./config/ConnectDB");
 const Login = require("./routes/Login");
 const RegisterUser = require("./routes/Register");
 const VillageInfo = require("./routes/VillageRoute");
@@ -20,7 +20,7 @@ app.get("/", (request, response) => {
   response.status.send("Welcome to the Geo spatial Api");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 2000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
