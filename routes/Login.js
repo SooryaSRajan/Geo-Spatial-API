@@ -2,7 +2,7 @@ const Express = require("express");
 const bcrypt = require("bcrypt");
 const router = Express.Router();
 
-const { User } = require("../models/Users");
+const { User } = require("../models/users");
 
 router.post("/", async (request, response) => {
   const CheckUser = await User.findOne({ username: request.body.username });
