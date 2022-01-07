@@ -1,6 +1,6 @@
 const Express = require("express");
 const router = Express.Router();
-const { User } = require("../models/Users");
+const { User } = require("../Models/users");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const AdminWebAuth = require("../Middleware/AdminWebAuth");
