@@ -17,7 +17,7 @@ router.put("/:username", AuthMobile, async (request, response) => {
     { password: HashedPassword },
     null,
     (err, doc) => {
-      if (error) {
+      if (err) {
         return response.status(406).send(error);
       } else {
         return response.status(200).send("Password Changed Successfully");
