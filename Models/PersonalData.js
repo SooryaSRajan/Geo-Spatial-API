@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const PersonalData = require("../Models/PersonalData");
+const PersonalData = require("../Models/PersonalDataSchema");
 
 const PersonalDataSchema = new mongoose.Schema({
   PersonalInfoCollection: [PersonalData],

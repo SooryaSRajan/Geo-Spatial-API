@@ -1,4 +1,4 @@
-const mongoose = rrequire("mongoose");
+const mongoose = require("mongoose");
 
 const polygonSchema = new mongoose.Schema({
   type: {

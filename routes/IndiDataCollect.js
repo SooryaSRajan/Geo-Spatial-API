@@ -4,6 +4,7 @@ const router = Express.Router();
 const VillageModel = require("../Models/villageInfo");
 const PersonalDataModel = require("../models/PersonalData");
 const FamilyCommonDataModel = require("../models/FamilyCommonModel");
+// const _ = require("lodash");
 
 function GetFamilyNumberFromUIN(UIN) {
   // IRNCE(5) + VILLAGECODE (3) + F + FAMILYNUMBER (3) + I + INDIVIDUALNUMBER (3)
@@ -96,6 +97,20 @@ router.post("/", AuthMobile, async (request, response) => {
   }
 });
 
-router.get("/:username", AuthMobile, async (request, response) => {});
+router.get("/:username", AuthMobile, async (request, response) => {
+  const username = request.params.username;
+  //all the data that is collected bu the username
+  const InfoCollectedByUser =
+    await PersonalDataModel.PersonalInfoCollection.find({
+      username: username,
+    });
+
+  var UINlist = [];
+  InfoCollectedByUser.forEach((person) => {
+    UINlist.push(person.UIN);
+  });
+
+  response.status(200).send(UINlist);
+});
 
 module.exports = router;
