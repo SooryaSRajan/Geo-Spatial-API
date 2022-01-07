@@ -10,7 +10,7 @@ router.post("/", AdminWebAuth, async (request, response) => {
   const VillageInstance = new Village({
     villageName: villageName,
     villageCode: villageCode,
-    LastModifiedUIN: UIN,
+    LastModifiedUIN: LastModifiedUIN,
   });
 
   const RegisteredVillage = await VillageInstance.save();
