@@ -17,7 +17,7 @@ app.use("/api/villageInfo", VillageInfo);
 app.use("/api/IndividualData", IndividualData);
 
 app.get("/", (request, response) => {
-  response.status.send("Welcome to the Geo spatial Api");
+  response.status(200).send("Welcome to the Geo spatial Api");
 });
 
 const PORT = process.env.PORT || 2000;
