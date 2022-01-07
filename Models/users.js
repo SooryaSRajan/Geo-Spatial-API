@@ -26,8 +26,10 @@ const UserSchema = mongoose.Schema({
         var isValid = true;
         var roles = ["user", "admin", "admin-web"];
         for (var i = 0; i < array.length; i++) {
+          console.log(array[i]);
           roles.includes(array[i]) ? (isValid = true) : (isValid = false);
         }
+        console.log(isValid);
         return isValid;
       },
       message: "Invalid roles",
