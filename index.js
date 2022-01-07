@@ -15,7 +15,7 @@ app.use("/api/login", Login);
 app.use("/api/registerUser", RegisterUser);
 app.use("/api/villageInfo", VillageInfo);
 app.use("/api/IndividualData", IndividualData);
-app.use("/getUserData", UserInfo);
+app.use("/api/getUserData", UserInfo);
 
 app.get("/", (request, response) => {
   response.status(200).send("Welcome to the Geo spatial Api");
