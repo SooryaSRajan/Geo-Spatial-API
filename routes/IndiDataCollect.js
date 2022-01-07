@@ -68,6 +68,7 @@ router.post("/", AuthMobile, async (request, response) => {
     });
 
     const FamCommonDataInstance = new FamilyCommonDataModel({
+      UIN: lastModifiedUIN.substring(0, 12),
       FamilyCommonData: request.body.FamilyCommonData,
       GeoJsonHome: request.body.GeoJsonHome,
     });
@@ -94,5 +95,7 @@ router.post("/", AuthMobile, async (request, response) => {
     }
   }
 });
+
+router.get("/:username", AuthMobile, async (request, response) => {});
 
 module.exports = router;
