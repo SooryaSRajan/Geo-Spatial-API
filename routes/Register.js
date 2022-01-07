@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const AdminWebAuth = require("../Middleware/AdminWebAuth");
 
-router.post("/", AdminWebAuth, async (request, response) => {
+router.post("/", async (request, response) => {
   // check if the user is already there in the data base
   const CheckIfUserIsAlreadyRegistered = await User.findOne({
     username: request.body.username,
