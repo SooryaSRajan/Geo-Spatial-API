@@ -12,7 +12,7 @@ const VillageSchema = new mongoose.Schema({
     maxlength: 3,
     unique: true,
   },
-  UIN: {
+  LastModifiedUIN: {
     type: String,
   },
 });

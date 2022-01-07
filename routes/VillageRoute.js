@@ -6,7 +6,7 @@ const Village = require("../Models/villageInfo");
 const _ = require("lodash");
 
 router.post("/", AdminWebAuth, async (request, response) => {
-  const { villageName, villageCode, UIN } = request.body;
+  const { villageName, villageCode, LastModifiedUIN } = request.body;
   const VillageInstance = new Village({
     villageName: villageName,
     villageCode: villageCode,
