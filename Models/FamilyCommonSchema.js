@@ -15,11 +15,9 @@ const FamilyDataSchema = new mongoose.Schema({
 
   numberOfTwoWheelers: String,
 
-  brandsOfTwoWheelers: [String],
-
   numberOfThreeWheelers: String,
 
-  brandsOfThreeWheelers: [String],
+  brandsOfTwoThreeWheelers: [String],
 
   numberOfFourWheelers: String,
 
