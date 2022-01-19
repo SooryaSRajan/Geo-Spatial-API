@@ -4,17 +4,23 @@ const communityBuildingModel = require("../Models/CommunityBuildingsModel");
 const AuthMobile = require("../Middleware/AuthMobile");
 
 router.post("/", AuthMobile, async (request, response) => {
-  //create a new community building Instance
-  const communityBuildingInstance = new communityBuildingModel({
-    resourceType: request.body.resourceType,
-    villageCode: request.body.villageCode,
+    //create a new community building Instance
+    const communityBuildingInstance = new communityBuildingModel({
+        resourceType: request.body.resourceType,
+        villageCode: request.body.villageCode,
+        locationTopLeft: request.body.locationTopLeft,
+        locationTopRight: request.body.locationTopRight,
+        locationBottomLeft: request.body.locationBottomLeft,
+        locationBottomRight: request.body.locationBottomRight,
+        //GeoJsonCommunityBuilding: request.body.GeoJsonCommunityBuilding,
+    });
 
-    GeoJsonCommunityBuilding: request.body.GeoJsonCommunityBuilding,
-  });
+    console.log(request.body)
 
-  const saveCommunityBuilding = await communityBuildingInstance.save();
+    const saveCommunityBuilding = await communityBuildingInstance.save();
 
-  response.status(201).send(saveCommunityBuilding);
+    //await sleep(5000);
+    response.status(201).send(saveCommunityBuilding);
 });
 
 module.exports = router;
