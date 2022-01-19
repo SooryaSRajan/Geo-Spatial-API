@@ -1,29 +1,47 @@
 const Express = require("express");
 const router = Express.Router();
-const mongoose = require("mongoose");
-const { User } = require("../Models/users");
+const {User} = require("../Models/users");
 const AuthMobile = require("../Middleware/AuthMobile");
 const bcrypt = require("bcrypt");
 
 router.put("/:username", AuthMobile, async (request, response) => {
-  var username = request.params.username;
-  var newpassword = request.body.password;
+    const username = request.params.username;
+    const newPassword = request.body.password;
+    const currentPassword = request.body.currentPassword;
 
-  const salt = await bcrypt.genSalt(10);
-  const HashedPassword = await bcrypt.hash(newpassword, salt);
+    const CheckUser = await User.findOne({username});
 
-  const UserInstance = await User.findOneAndUpdate(
-    { username: username },
-    { password: HashedPassword },
-    null,
-    (err, doc) => {
-      if (err) {
-        return response.status(406).send(error);
-      } else {
-        return response.status(200).send("Password Changed Successfully");
-      }
+    //if user record is not available then responds as a bad request
+    if (!CheckUser)
+        return response.status(400).send("User not found");
+
+    //check if entered password and user password is same
+    const compareCurrentPassword = await bcrypt.compare(
+        currentPassword,
+        CheckUser.password
+    );
+    //wrong password case
+    console.log(currentPassword, compareCurrentPassword, CheckUser);
+    if (!compareCurrentPassword)
+        return response.status(400).send("Invalid Password");
+    else {
+        const newPasswordCheck = await bcrypt.compare(
+            newPassword,
+            CheckUser.password
+        );
+        if (newPasswordCheck) {
+            return response.status(400).send("New password can't be same as old password");
+        }
+        const salt = await bcrypt.genSalt(10);
+        const HashedPassword = await bcrypt.hash(newPassword, salt);
+        CheckUser.update({password: HashedPassword}, function (err, raw) {
+            if (err) {
+                response.send(err);
+            }
+            return response.status(200).send("Password Changed Successfully");
+
+        });
     }
-  );
 });
 
 module.exports = router;
