@@ -15,8 +15,6 @@ router.post("/", AuthMobile, async (request, response) => {
         //GeoJsonCommunityBuilding: request.body.GeoJsonCommunityBuilding,
     });
 
-    console.log(request.body)
-
     const saveCommunityBuilding = await communityBuildingInstance.save();
 
     //await sleep(5000);
