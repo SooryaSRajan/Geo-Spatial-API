@@ -2,6 +2,7 @@ const Express = require("express");
 const DBConnection = require("./config/ConnectDB");
 const Login = require("./routes/Login");
 const RegisterUser = require("./routes/Register");
+const ValidTokenRoute = require("./routes/ValidTokenRoute");
 const VillageInfo = require("./routes/VillageRoute");
 const IndividualData = require("./routes/IndiDataCollect");
 const UserInfo = require("./routes/userInfo");
@@ -16,6 +17,7 @@ DBConnection();
 
 //routes
 app.use("/api/login", Login);
+app.use("/api/validateToken", ValidTokenRoute);
 app.use("/api/registerUser", RegisterUser);
 app.use("/api/villageInfo", VillageInfo);
 app.use("/api/IndividualData", IndividualData);
@@ -24,11 +26,11 @@ app.use("/api/changeUserPassword", ChangeUserPassword);
 app.use("/api/addCommunityBuilding", AddCommunityBuilding);
 
 app.get("/", (request, response) => {
-  response.status(200).send("Welcome to the Geo spatial Api");
+    response.status(200).send("Welcome to the Geo spatial Api");
 });
 
 const PORT = process.env.PORT || 2000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
