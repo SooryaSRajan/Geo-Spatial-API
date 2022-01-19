@@ -5,7 +5,8 @@ require("dotenv").config();
 function ConnectDatabase() {
   var DatabaseConnection = mongoose.connect(
     //returns Promise
-    `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_USER_PASSWORD}@geo-spatial.zuwu9.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`
+      'mongodb://localhost:27017/geoSpatial'
+    //`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_USER_PASSWORD}@geo-spatial.zuwu9.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`
   );
 
   DatabaseConnection.then(() => {
