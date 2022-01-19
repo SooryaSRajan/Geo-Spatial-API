@@ -17,7 +17,6 @@ router.post("/", AuthMobile, async (request, response) => {
 
     const saveCommunityBuilding = await communityBuildingInstance.save();
 
-    //await sleep(5000);
     response.status(201).send(saveCommunityBuilding);
 });
 
