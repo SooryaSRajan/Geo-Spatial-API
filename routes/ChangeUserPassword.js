@@ -4,8 +4,8 @@ const {User} = require("../Models/users");
 const AuthMobile = require("../Middleware/AuthMobile");
 const bcrypt = require("bcrypt");
 
-router.put("/:username", AuthMobile, async (request, response) => {
-    const username = request.params.username;
+router.put("/", AuthMobile, async (request, response) => {
+    const username = request.user['username'];
     const newPassword = request.body.password;
     const currentPassword = request.body.currentPassword;
 
@@ -34,7 +34,7 @@ router.put("/:username", AuthMobile, async (request, response) => {
         }
         const salt = await bcrypt.genSalt(10);
         const HashedPassword = await bcrypt.hash(newPassword, salt);
-        CheckUser.update({password: HashedPassword}, function (err, raw) {
+        CheckUser.updateOne({password: HashedPassword}, function (err, raw) {
             if (err) {
                 response.send(err);
             }
