@@ -9,7 +9,10 @@ const moment = require("moment");
 
 function formatDate(date) {
   // "2022-01-07T18:08:57.250Z" -- sample
-  return String(moment(date).format("YYYY-MM-DD")).split("").reverse().join("");
+  return String(moment(date).format("YYYY-MM-DD"))
+    .split("-")
+    .reverse()
+    .join("-");
 }
 
 router.get("/", AuthMobile, async (request, response) => {
