@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const occupationDataSchema = require("./occupationDataSchema");
+
+const occupationDataSchema = new mongoose.Schema({
+  category: String,
+  occupation: [String],
+});
 
 const personalDataSchema = new mongoose.Schema({
   UIN: String,
