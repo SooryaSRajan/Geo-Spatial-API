@@ -1,46 +1,7 @@
 const mongoose = require("mongoose");
+const occupationDataSchema = require("./occupationDataSchema");
 
-const occupationDataSchema = new mongoose.Schema({
-  category: String,
-  occupation: [String],
-});
-
-const personalDataSchema = new mongoose.Schema({
-  UIN: String,
-  name: String,
-  dateOfBirth: String,
-  gender: String,
-  phoneNumber: String,
-  educationalQualification: String,
-  aadhaarNumber: String,
-  Vulnerabilities: [String],
-  isADailyWageWorker: String,
-  occupationData: [occupationDataSchema],
-  employed: String,
-  income: String,
-  incomeType: String,
-  oldAgePension: String,
-  businessStatus: String,
-  maritalStatus: String,
-  noOfDaysWorking: String,
-  specialSkills: [String],
-  workTimings: [String],
-  surgeriesUndergone: String,
-  anganwadiServicesAware: String,
-  anganwadiServicesUsed: String,
-  anganwadiServicesUtilised: [String],
-  phcServicesUtilised: String,
-  privateHealthClinicFacilitiesUsed: [String],
-  reasonsForVisitingPrivateHealthClinic: [String],
-  communicableDiseases: [String],
-  frequentHealthAilments: [String],
-  nonCommunicableDiseases: [String],
-  tobaccoBasedProductsUsage: String,
-  tobaccoProductsUsed: [String],
-  alcoholConsumption: String,
-  arogyaSethuAppInstallationStatus: String,
-  vizhithiruAppInstallationStatus: String,
-});
+const personalDataSchema = require("./personalDataSchema");
 
 const FamilyindData = new mongoose.Schema({
   familyMemberData: [personalDataSchema],
