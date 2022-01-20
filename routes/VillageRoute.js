@@ -21,7 +21,7 @@ router.post("/", AdminWebAuth, async (request, response) => {
 router.get("/getVillageInfo", AuthMobile, async (request, response) => {
   const VillageInfo = await Village.find({});
 
-  var villageInfo = [];
+  const villageInfo = [];
 
   VillageInfo.forEach((village) => {
     villageInfo.push(

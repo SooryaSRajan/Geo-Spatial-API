@@ -2,7 +2,6 @@ const Express = require("express");
 const router = Express.Router();
 const { User } = require("../Models/users");
 const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
 const AdminWebAuth = require("../Middleware/AdminWebAuth");
 
 router.post("/", AdminWebAuth, async (request, response) => {
@@ -27,10 +26,8 @@ router.post("/", AdminWebAuth, async (request, response) => {
 
   //encrypting the user password before saving to the database
   const salt = await bcrypt.genSalt(10);
-  const HashedPassword = await bcrypt.hash(CreateUserInstance.password, salt);
-
   // reassigning the hashed password in the place of the password
-  CreateUserInstance.password = HashedPassword;
+  CreateUserInstance.password = await bcrypt.hash(CreateUserInstance.password, salt);
 
   //save into the database
   const UserRegistered = await CreateUserInstance.save();
