@@ -38,4 +38,4 @@ const personalDataSchema = new mongoose.Schema({
   vizhithiruAppInstallationStatus: String,
 });
 
-module.exports = personalDataSchema;
+module.exports = { personalDataSchema };

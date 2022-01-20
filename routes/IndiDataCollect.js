@@ -102,20 +102,20 @@ router.post("/", AuthMobile, async (request, response) => {
   });
 });
 
-router.get("/", AuthMobile, async (request, response) => {
-  const username = request.user;
-  //all the data that is collected bu the username
-  const InfoCollectedByUser =
-    await PersonalDataModel.PersonalInfoCollection.find({
-      username: username,
-    });
+// router.get("/", AuthMobile, async (request, response) => {
+//   const username = request.user;
+//   //all the data that is collected bu the username
+//   const InfoCollectedByUser =
+//     await PersonalDataModel.PersonalInfoCollection.find({
+//       username: username,
+//     });
 
-  const UINlist = [];
-  InfoCollectedByUser.forEach((person) => {
-    UINlist.push(person.UIN);
-  });
+//   const UINlist = [];
+//   InfoCollectedByUser.forEach((person) => {
+//     UINlist.push(person.UIN);
+//   });
 
-  response.status(200).send(UINlist);
-});
+//   response.status(200).send(UINlist);
+// });
 
 module.exports = router;
