@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const occupationDataSchema = require("./occupationDataSchema");
 
-const personlDataSchema = new mongoose.Schema({
+const personalDataSchema = new mongoose.Schema({
   UIN: String,
   name: String,
   dateOfBirth: String,
@@ -38,4 +38,4 @@ const personlDataSchema = new mongoose.Schema({
   vizhithiruAppInstallationStatus: String,
 });
 
-module.exports = personlDataSchema;
+module.exports = personalDataSchema;
