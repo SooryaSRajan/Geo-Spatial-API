@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const personalDataSchema = require("./personalDataSchema");
+const personalDataSchema = require("../Models/personalDataSchema");
 
 const FamilyindData = new mongoose.Schema({
   familyMemberData: [personalDataSchema],
