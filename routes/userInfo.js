@@ -16,8 +16,8 @@ function formatDate(date) {
 router.get("/", AuthMobile, async (request, response) => {
   const UserInfo = await User.find({ username: request.user.username });
 
-    const UserInfoList = [];
-    UserInfo.forEach((user) => {
+  const UserInfoList = [];
+  UserInfo.forEach((user) => {
     UserInfoList.push(
       _.pick(user, [
         "Name",

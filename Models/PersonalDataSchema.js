@@ -1,75 +1,41 @@
 const mongoose = require("mongoose");
-const Express = require("express");
+const occupationDataSchema = require("./occupationDataSchema");
 
-const PersonData = new mongoose.Schema({
+const personlDataSchema = new mongoose.Schema({
   UIN: String,
-
-  username: String,
-
-  timeStamp: {
-    type: Date,
-    default: Date.now,
-  },
-
   name: String,
-
-  date: String,
-
+  dateOfBirth: String,
   gender: String,
-
-  educationalQualification: String,
-
   phoneNumber: String,
-
-  aadharNumber: String,
-
+  educationalQualification: String,
+  aadhaarNumber: String,
   Vulnerabilities: [String],
-
-  oldAgePension: String,
-
-  occupation: [String],
-
   isADailyWageWorker: String,
-
-  incomePerDay: String,
-
-  incomePerMonth: String,
-
-  workTimings: String,
-
-  maritalStatus: String,
-
-  specialSkills: [String],
-
-  frequentHealthAilments: [String],
-
-  communicableDiseases: [String],
-
-  nonCommunicableDiseases: [String],
-
-  surgeriesUndergone: String,
-
-  anganwadiServicesAware: String,
-
-  anganwadiServicesUsed: String,
-
-  anganwadiServicesUtilised: [String],
-
-  phcServicesUtilised: String,
-
-  privateHealthClinicFacilitiesUsed: [String],
-
-  reasonsForVisitingPrivateHealthClinic: String,
-
-  tobaccoBasedProductsUsage: [String],
-
-  alcoholConsumption: String,
-
+  occupationData: [occupationDataSchema],
+  employed: String,
+  income: String,
+  incomeType: String,
+  oldAgePension: String,
   businessStatus: String,
-
+  maritalStatus: String,
+  noOfDaysWorking: String,
+  specialSkills: [String],
+  workTimings: [String],
+  surgeriesUndergone: String,
+  anganwadiServicesAware: String,
+  anganwadiServicesUsed: String,
+  anganwadiServicesUtilised: [String],
+  phcServicesUtilised: String,
+  privateHealthClinicFacilitiesUsed: [String],
+  reasonsForVisitingPrivateHealthClinic: [String],
+  communicableDiseases: [String],
+  frequentHealthAilments: [String],
+  nonCommunicableDiseases: [String],
+  tobaccoBasedProductsUsage: String,
+  tobaccoProductsUsed: [String],
+  alcoholConsumption: String,
   arogyaSethuAppInstallationStatus: String,
-
   vizhithiruAppInstallationStatus: String,
 });
 
-module.exports = PersonData;
+module.exports = personlDataSchema;

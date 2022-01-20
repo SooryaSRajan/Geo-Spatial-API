@@ -1,51 +1,41 @@
 const mongoose = require("mongoose");
 
-const FamilyDataSchema = new mongoose.Schema({
+const personalDataSchema = require("./personalDataSchema");
+
+const FamilyindData = new mongoose.Schema({
+  familyMemberData: [personalDataSchema],
+  FamilyUIN: String,
+  locationTopLeft: [Number],
+  locationTopRight: [Number],
+  locationBottomLeft: [Number],
+  locationBottomRight: [Number],
+  headOfFamily: String,
   availabilityOfDrinkingWater: String,
-
   drinkingWaterSource: [String],
-
   areToiletsAvailableInHouse: String,
-
-  availabilityOfWaterInToilets: String,
-
+  noToiletsWhy: [String],
   alternativeForHouseholdToilet: String,
-
   statusOfEnvironmentalSanitation: String,
-
+  availabilityOfWaterInToilets: String,
   numberOfTwoWheelers: String,
-
   numberOfThreeWheelers: String,
-
-  brandsOfTwoThreeWheelers: [String],
-
   numberOfFourWheelers: String,
-
+  brandsOfTwoThreeWheelers: [String],
   brandsOfFourWheelers: [String],
-
-  doYouOwnCattle: String,
-
-  incomeFromCattle: String,
-
-  doYouOwnFarmLand: String,
-
-  cropsCultivated: [String],
-
-  doYouPreserveSeeds: [String],
-
-  typesOfSeedsPreserved: [String],
-
   locallyAvailableFoodsConsumed: [String],
-
+  doYouOwnCattle: String,
+  incomeFromCattle: String,
+  doYouOwnFarmLand: String,
+  doYouPreserveSeeds: String,
+  cropsCultivated: [String],
+  typesOfSeedsPreserved: [String],
   treesOwnedIfAny: [String],
-
   isKitchenGardenAvailable: String,
-
   cropsInKitchenGarden: [String],
-
   address: String,
-
   villageCode: String,
 });
 
-module.exports = FamilyDataSchema;
+const FamilyDataModel = mongoose.model("FamilyData", FamilyindData);
+
+module.exports = FamilyDataModel;

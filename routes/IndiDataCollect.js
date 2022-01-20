@@ -2,116 +2,119 @@ const Express = require("express");
 const AuthMobile = require("../Middleware/AuthMobile");
 const router = Express.Router();
 const VillageModel = require("../Models/villageInfo");
-const PersonalDataModel = require("../Models/PersonalData");
-const FamilyCommonDataModel = require("../Models/FamilyCommonModel");
+const FamilyModel = require("../Models/FamCommDataModel");
 
 // const _ = require("lodash");
 
 function GetFamilyNumberFromUIN(UIN) {
-    // IRNCE(5) + VILLAGECODE (3) + F + FAMILYNUMBER (3) + I + INDIVIDUALNUMBER (3)
-    return UIN.substring(9, 12);
+  // IRNCE(5) + VILLAGECODE (3) + F + FAMILYNUMBER (3) + I + INDIVIDUALNUMBER (3)
+  return UIN.substring(9, 12);
 }
 
 function FormatNumberasThreeDigit(number) {
-    if (number < 100 && number >= 10) {
-        number = "0" + number;
-    } else if (number < 10) {
-        number = "00" + number;
-    }
-    return number;
+  if (number < 100 && number >= 10) {
+    number = "0" + number;
+  } else if (number < 10) {
+    number = "00" + number;
+  }
+  return number;
 }
 
 async function GenerateUINForFamily(VillageCode) {
-    //querying for the last modified UIN
-    const village = await VillageModel.find({villageCode: VillageCode});
-    const LastModifiedUIN = village[0].LastModifiedUIN;
-    let FamilyNumber = GetFamilyNumberFromUIN(LastModifiedUIN);
-    FamilyNumber = parseInt(FamilyNumber) + 1;
-    FamilyNumber = FormatNumberasThreeDigit(FamilyNumber);
-    return "IRNCE" + VillageCode + "F" + FamilyNumber + "I";
+  //querying for the last modified UIN
+  const village = await VillageModel.find({ villageCode: VillageCode });
+  const LastModifiedUIN = village[0].LastModifiedUIN;
+  let FamilyNumber = GetFamilyNumberFromUIN(LastModifiedUIN);
+  FamilyNumber = parseInt(FamilyNumber) + 1;
+  FamilyNumber = FormatNumberasThreeDigit(FamilyNumber);
+  return "IRNCE" + VillageCode + "F" + FamilyNumber + "I";
 }
 
 router.post("/", AuthMobile, async (request, response) => {
-    if (request.isGenerated) {
-        const IndividualPeopleInfoInstance = new PersonalDataModel({
-            PersonalInfoCollection: request.body.PersonalInfoCollection,
-        });
+  //generating the UIN code for family here
+  var UINCode = GenerateUINForFamily(request.body.villageCode);
+  // iterate on request body to add UIn manually and save it to the database
+  var familyMemberData = request.body.familyMemberData;
 
-        const FamCommonDataInstance = new FamilyCommonDataModel({
-            FamilyCommonData: request.body.FamilyCommonData,
-            GeoJsonHome: request.body.GeoJsonHome,
-        });
+  var count = 0;
+  var lastModifiedUIN = "";
+  //personal info collection is a json array which which contains the user objects and UIN
+  familyMemberData.forEach((person) => {
+    count++;
+    person.UIN = UINCode + FormatNumberasThreeDigit(count);
+    lastModifiedUIN = person.UIN;
+  });
 
-        const RegisteredPersonalInfo = await IndividualPeopleInfoInstance.save();
-        const RegisteredFamilyCommonData = await FamCommonDataInstance.save();
+  const FamCommonDataInstance = new FamilyModel({
+    familyMemberData: request.body.familyMemberData,
+    FamilyUIN: lastModifiedUIN.substring(0, 12),
+    locationTopLeft: request.body.locationTopLeft,
+    locationTopRight: request.body.locationTopRight,
+    locationBottomLeft: request.body.locationBottomLeft,
+    locationBottomRight: request.body.locationBottomRight,
+    headOfFamily: request.body.headOfFamily,
+    availabilityOfDrinkingWater: request.body.availabilityOfDrinkingWater,
+    drinkingWaterSource: request.body.drinkingWaterSource,
+    areToiletsAvailableInHouse: request.body.areToiletsAvailableInHouse,
+    noToiletsWhy: request.body.noToiletsWhy,
+    alternativeForHouseholdToilet: request.body.alternativeForHouseholdToilet,
+    statusOfEnvironmentalSanitation:
+      request.body.statusOfEnvironmentalSanitation,
+    availabilityOfWaterInToilets: request.body.availabilityOfWaterInToilets,
+    numberOfTwoWheelers: request.body.numberOfTwoWheelers,
+    numberOfThreeWheelers: request.body.numberOfThreeWheelers,
+    numberOfFourWheelers: request.body.numberOfFourWheelers,
+    brandsOfTwoThreeWheelers: request.body.brandsOfTwoThreeWheelers,
+    brandsOfFourWheelers: request.body.brandsOfFourWheelers,
+    locallyAvailableFoodsConsumed: request.body.locallyAvailableFoodsConsumed,
+    doYouOwnCattle: request.body.doYouOwnCattle,
+    incomeFromCattle: request.body.incomeFromCattle,
+    doYouOwnFarmLand: request.body.doYouOwnFarmLand,
+    doYouPreserveSeeds: request.body.doYouPreserveSeeds,
+    cropsCultivated: request.body.cropsCultivated,
+    typesOfSeedsPreserved: request.body.typesOfSeedsPreserved,
+    treesOwnedIfAny: request.body.treesOwnedIfAny,
+    isKitchenGardenAvailable: request.body.isKitchenGardenAvailable,
+    cropsInKitchenGarden: request.body.cropsInKitchenGarden,
+    address: request.body.address,
+    villageCode: request.body.villageCode,
+  });
 
-        if (RegisteredPersonalInfo && RegisteredFamilyCommonData) {
-            response.status(201).send("Data Saved Successfully");
+  const RegisteredFamilyCommonData = await FamCommonDataInstance.save();
+
+  if (RegisteredFamilyCommonData) {
+    //update the last modified UIN in the village collection
+    const update = await VillageModel.findOneAndUpdate(
+      { villageCode: request.body.villageCode },
+      { LastModifiedUIN: lastModifiedUIN },
+      null,
+      (error, docs) => {
+        if (error) {
+          console.log(error);
+        } else {
+          response
+            .status(201)
+            .send("Data Saved Successfully and UIN updated..!");
         }
-    } else {
-        //generating the UIN code for family here
-        var UINCode = GenerateUINForFamily(
-            request.body.FamilyCommonData.VillageCode
-        );
-        // iterate on request body to add UIn manually and save it to the database
-        var PersonalInfoCollection = request.body.PersonalInfoCollection;
-
-        var count = 0;
-        var lastModifiedUIN = "";
-        //personal info collection is a json array which which contains the user objects and UIN
-        PersonalInfoCollection.forEach((person) => {
-            count++;
-            person.UIN = UINCode + FormatNumberasThreeDigit(count);
-            lastModifiedUIN = person.UIN;
-        });
-
-        const IndividualPeopleInfoInstance = new PersonalDataModel({
-            PersonalInfoCollection: PersonalInfoCollection,
-        });
-
-        const FamCommonDataInstance = new FamilyCommonDataModel({
-            UIN: lastModifiedUIN.substring(0, 12),
-            FamilyCommonData: request.body.FamilyCommonData,
-            GeoJsonHome: request.body.GeoJsonHome,
-        });
-
-        const RegisteredPersonalInfo = await IndividualPeopleInfoInstance.save();
-        const RegisteredFamilyCommonData = await FamCommonDataInstance.save();
-
-        if (RegisteredPersonalInfo && RegisteredFamilyCommonData) {
-            //update the last modified UIN in the village collection
-            const update = await VillageModel.findOneAndUpdate(
-                {villageCode: request.body.FamilyCommonData.VillageCode},
-                {LastModifiedUIN: lastModifiedUIN},
-                null,
-                (error, docs) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        response
-                            .status(201)
-                            .send("Data Saved Successfully and UIN updated..!");
-                    }
-                }
-            );
-        }
-    }
+      }
+    );
+  }
 });
 
 router.get("/", AuthMobile, async (request, response) => {
-    const username = request.user;
-    //all the data that is collected bu the username
-    const InfoCollectedByUser =
-        await PersonalDataModel.PersonalInfoCollection.find({
-            username: username,
-        });
-
-    const UINlist = [];
-    InfoCollectedByUser.forEach((person) => {
-        UINlist.push(person.UIN);
+  const username = request.user;
+  //all the data that is collected bu the username
+  const InfoCollectedByUser =
+    await PersonalDataModel.PersonalInfoCollection.find({
+      username: username,
     });
 
-    response.status(200).send(UINlist);
+  const UINlist = [];
+  InfoCollectedByUser.forEach((person) => {
+    UINlist.push(person.UIN);
+  });
+
+  response.status(200).send(UINlist);
 });
 
 module.exports = router;
