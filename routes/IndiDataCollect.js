@@ -25,9 +25,9 @@ async function GenerateUINForFamily(VillageCode) {
   const village = await VillageModel.findOne({ villageCode: VillageCode });
   console.log(village);
   const LastModifiedUIN = village.LastModifiedUIN;
-  var FamilyNumber = GetFamilyNumberFromUIN(LastModifiedUIN);
+  let FamilyNumber = GetFamilyNumberFromUIN(LastModifiedUIN);
   FamilyNumber = parseInt(FamilyNumber) + 1;
-  //FamilyNumber = FormatNumberasThreeDigit(FamilyNumber);
+  //FamilyNumber = FormatNumberAsThreeDigit(FamilyNumber);
   return (
     "IRNCE" + VillageCode + "F" + FormatNumberasThreeDigit(FamilyNumber) + "I"
   );
@@ -37,10 +37,10 @@ router.post("/", AuthMobile, async (request, response) => {
   //generating the UIN code for family here
   GenerateUINForFamily(request.body.villageCode).then(async (UIN) => {
     // iterate on request body to add UIn manually and save it to the database
-    var familyMemberData = request.body.familyMemberData;
+    const familyMemberData = request.body.familyMemberData;
 
-    var count = 0;
-    var lastModifiedUIN = "";
+    let count = 0;
+    let lastModifiedUIN = "";
     //personal info collection is a json array which which contains the user objects and UIN
     familyMemberData.forEach((person) => {
       count++;

@@ -23,9 +23,9 @@ const UserSchema = mongoose.Schema({
     default: ["user"],
     validate: {
       validator: function (array) {
-        var isValid = true;
-        var roles = ["user", "admin", "admin-web"];
-        for (var i = 0; i < array.length; i++) {
+        let isValid = true;
+        const roles = ["user", "admin", "admin-web"];
+        for (let i = 0; i < array.length; i++) {
           console.log(array[i]);
           roles.includes(array[i]) ? (isValid = true) : (isValid = false);
         }
@@ -53,11 +53,10 @@ const UserSchema = mongoose.Schema({
 
 //method to generating a jwt token
 UserSchema.methods.GenerateJwtToken = function () {
-  const token = jwt.sign(
-    { _id: this._id, username: this.username, roles: this.roles },
-    process.env.JWT_SECRET_KEY
+  return jwt.sign(
+      {_id: this._id, username: this.username, roles: this.roles},
+      process.env.JWT_SECRET_KEY
   );
-  return token;
 };
 
 //creating a model for mongo Schema

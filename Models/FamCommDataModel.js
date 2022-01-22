@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const occupationDataSchema = require("./occupationDataSchema");
 
 const personalDataSchema = require("./personalDataSchema");
 
