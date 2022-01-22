@@ -9,6 +9,7 @@ router.post("/", AuthMobile, async (request, response) => {
     const username = request.user['username'];
 
     const communityBuildingInstance = new communityBuildingModel({
+        volunteerUserId: request.body.volunteerUserId,
         resourceType: request.body.resourceType,
         villageCode: request.body.villageCode,
         locationTopLeft: request.body.locationTopLeft,

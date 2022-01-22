@@ -4,6 +4,7 @@ const occupationDataSchema = require("./occupationDataSchema");
 const personalDataSchema = require("./personalDataSchema");
 
 const FamilyindData = new mongoose.Schema({
+  volunteerUserId: String,
   familyMemberData: [personalDataSchema],
   FamilyUIN: String,
   locationTopLeft: [Number],

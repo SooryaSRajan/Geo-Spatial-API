@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const CommunityBuildingSchema = mongoose.Schema({
+  volunteerUserId: String,
   resourceType: String,
   villageCode: {
     type: String,

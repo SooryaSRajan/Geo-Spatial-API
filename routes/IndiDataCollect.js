@@ -49,6 +49,7 @@ router.post("/", AuthMobile, async (request, response) => {
     });
 
     const FamCommonDataInstance = new FamilyModel({
+      volunteerUserId: request.body.volunteerUserId,
       familyMemberData: request.body.familyMemberData,
       FamilyUIN: lastModifiedUIN.substring(0, 12),
       locationTopLeft: request.body.locationTopLeft,

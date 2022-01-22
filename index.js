@@ -8,6 +8,7 @@ const IndividualData = require("./routes/IndiDataCollect");
 const UserInfo = require("./routes/userInfo");
 const ChangeUserPassword = require("./routes/ChangeUserPassword");
 const AddCommunityBuilding = require("./routes/CommunityBuildings");
+const GetCommonRecords = require("./routes/GetCommonRecords");
 const app = Express();
 
 app.use(Express.json());
@@ -24,6 +25,7 @@ app.use("/api/IndividualData", IndividualData);
 app.use("/api/getUserData", UserInfo);
 app.use("/api/changeUserPassword", ChangeUserPassword);
 app.use("/api/addCommunityBuilding", AddCommunityBuilding);
+app.use("/api/getCommonRecords", GetCommonRecords);
 
 app.get("/", (request, response) => {
     response.status(200).send("Welcome to the Geo spatial Api");
