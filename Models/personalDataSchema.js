@@ -27,7 +27,7 @@ const personalDataSchema = new mongoose.Schema({
   anganwadiServicesUsed: String,
   anganwadiServicesUtilised: [String],
   phcServicesUtilised: String,
-  privateHealthClinicFacilitiesUsed: [String],
+  privateHealthClinicFacilitiesUsed: String,
   reasonsForVisitingPrivateHealthClinic: [String],
   communicableDiseases: [String],
   frequentHealthAilments: [String],
