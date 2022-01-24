@@ -19,6 +19,8 @@ const personalDataSchema = new mongoose.Schema({
   oldAgePension: String,
   businessStatus: String,
   maritalStatus: String,
+  student: String,
+  studentEducationCategory: String,
   noOfDaysWorking: String,
   specialSkills: [String],
   workTimings: [String],
