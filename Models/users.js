@@ -2,6 +2,16 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+function generateKey() {
+  let text = "";
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (let i = 0; i < 16; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  console.log("NEW KEY GENERATED", text)
+  return text
+}
+
 const UserSchema = mongoose.Schema({
   Name: {
     type: String,
@@ -17,6 +27,9 @@ const UserSchema = mongoose.Schema({
     required: true,
     minlength: 8,
     maxlength: 250,
+  },
+  verificationKey : {
+    type: String,
   },
   roles: {
     type: [String],
@@ -54,7 +67,7 @@ const UserSchema = mongoose.Schema({
 //method to generating a jwt token
 UserSchema.methods.GenerateJwtToken = function () {
   return jwt.sign(
-      {_id: this._id, username: this.username, roles: this.roles},
+      {_id: this._id, username: this.username, roles: this.roles, verificationKey: this.verificationKey },
       process.env.JWT_SECRET_KEY
   );
 };
@@ -64,4 +77,5 @@ const User = mongoose.model("User", UserSchema);
 
 module.exports = {
   User: User,
+  generateKey: generateKey
 };

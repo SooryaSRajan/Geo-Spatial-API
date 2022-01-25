@@ -1,6 +1,6 @@
 const Express = require("express");
 const router = Express.Router();
-const { User } = require("../Models/users");
+const { User, generateKey} = require("../Models/users");
 const bcrypt = require("bcrypt");
 const AdminWebAuth = require("../Middleware/AdminWebAuth");
 
@@ -21,6 +21,8 @@ router.post("/", AdminWebAuth, async (request, response) => {
     password: request.body.password,
     roles: request.body.roles,
     gender: request.body.gender,
+    verificationKey: generateKey()
+
     //two added fields pending
   });
 

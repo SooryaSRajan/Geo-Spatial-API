@@ -1,6 +1,6 @@
 const Express = require("express");
 const router = Express.Router();
-const {User} = require("../Models/users");
+const {User, generateKey} = require("../Models/users");
 const AuthMobile = require("../Middleware/AuthMobile");
 const bcrypt = require("bcrypt");
 
@@ -21,7 +21,6 @@ router.put("/", AuthMobile, async (request, response) => {
         CheckUser.password
     );
     //wrong password case
-    console.log(currentPassword, compareCurrentPassword, CheckUser);
     if (!compareCurrentPassword)
         return response.status(400).send("Invalid Password");
     else {
@@ -34,11 +33,12 @@ router.put("/", AuthMobile, async (request, response) => {
         }
         const salt = await bcrypt.genSalt(10);
         const HashedPassword = await bcrypt.hash(newPassword, salt);
-        CheckUser.updateOne({password: HashedPassword}, function (err, raw) {
+        CheckUser.updateOne({password: HashedPassword, verificationKey: generateKey() }, async function (err, raw) {
             if (err) {
                 response.send(err);
             }
-            return response.status(200).send("Password Changed Successfully");
+            let updatedDoc = await User.findOne({username});
+            return response.status(200).send(updatedDoc.GenerateJwtToken());
 
         });
     }
