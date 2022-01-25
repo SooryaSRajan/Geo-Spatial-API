@@ -8,7 +8,6 @@ function generateKey() {
 
   for (let i = 0; i < 16; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
-  console.log("NEW KEY GENERATED", text)
   return text
 }
 

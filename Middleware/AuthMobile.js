@@ -40,8 +40,7 @@ module.exports = async function (request, response, next) {
                 return response.status(401).send("User not found");
             else {
                 //Checking if token is updated after changing password
-                console.log("KEY NO MATCH",request.user.verificationKey, CheckUser.verificationKey )
-                if (request.user.verificationKey !== CheckUser.verificationKey) {
+                if (request.user.verificationKey !== CheckUser.verificationKey && request.user.verificationKey !== undefined) {
                     return response.status(401).send("Invalid Token");
                 }
             }
