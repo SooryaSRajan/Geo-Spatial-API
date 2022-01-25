@@ -41,6 +41,7 @@ module.exports = async function (request, response, next) {
             else {
                 //Checking if token is updated after changing password
                 if (request.user.verificationKey !== CheckUser.verificationKey) {
+                    console.log("KEY NO MATCH",request.user.verificationKey, CheckUser.verificationKey )
                     return response.status(401).send("Invalid Token");
                 }
             }
