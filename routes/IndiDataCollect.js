@@ -3,6 +3,7 @@ const AuthMobile = require("../Middleware/AuthMobile");
 const router = Express.Router();
 const VillageModel = require("../Models/villageInfo");
 const FamilyModel = require("../Models/FamCommDataModel");
+const {User} = require("../Models/users");
 
 // const _ = require("lodash");
 
@@ -35,13 +36,14 @@ async function GenerateUINForFamily(VillageCode) {
 
 router.post("/", AuthMobile, async (request, response) => {
   //generating the UIN code for family here
+  const username = request.user['username'];
   GenerateUINForFamily(request.body.villageCode).then(async (UIN) => {
     // iterate on request body to add UIn manually and save it to the database
     const familyMemberData = request.body.familyMemberData;
 
     let count = 0;
     let lastModifiedUIN = "";
-    //personal info collection is a json array which which contains the user objects and UIN
+    //personal info collection is a json array which contains the user objects and UIN
     familyMemberData.forEach((person) => {
       count++;
       person.UIN = UIN + FormatNumberasThreeDigit(count);
@@ -93,30 +95,19 @@ router.post("/", AuthMobile, async (request, response) => {
           if (error) {
             console.log(error);
           } else {
+            User.findOneAndUpdate(
+                {username},
+                {$inc: {NumberOfRecordsCollected: 1}},
+                function (err, res) {
+                });
             response
               .status(201)
-              .send("Data Saved Successfully and UIN updated..!");
+              .send("Data Saved Successfully and UIN updated");
           }
         }
       );
     });
   });
 });
-
-// router.get("/", AuthMobile, async (request, response) => {
-//   const username = request.user;
-//   //all the data that is collected bu the username
-//   const InfoCollectedByUser =
-//     await PersonalDataModel.PersonalInfoCollection.find({
-//       username: username,
-//     });
-
-//   const UINlist = [];
-//   InfoCollectedByUser.forEach((person) => {
-//     UINlist.push(person.UIN);
-//   });
-
-//   response.status(200).send(UINlist);
-// });
 
 module.exports = router;
