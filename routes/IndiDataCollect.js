@@ -24,7 +24,7 @@ function FormatNumberasThreeDigit(number) {
 async function GenerateUINForFamily(VillageCode) {
   //querying for the last modified UIN
   const village = await VillageModel.findOne({ villageCode: VillageCode });
-  console.log(village);
+  if(!village) return ""
   const LastModifiedUIN = village.LastModifiedUIN;
   let FamilyNumber = GetFamilyNumberFromUIN(LastModifiedUIN);
   FamilyNumber = parseInt(FamilyNumber) + 1;
@@ -37,6 +37,7 @@ async function GenerateUINForFamily(VillageCode) {
 router.post("/", AuthMobile, async (request, response) => {
   //generating the UIN code for family here
   const username = request.user['username'];
+  console.log(request.body.villageCode)
   GenerateUINForFamily(request.body.villageCode).then(async (UIN) => {
     // iterate on request body to add UIn manually and save it to the database
     const familyMemberData = request.body.familyMemberData;
