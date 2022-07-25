@@ -39,6 +39,9 @@ router.post("/", AuthMobile, async (request, response) => {
   const username = request.user['username'];
   console.log(request.body.villageCode)
   GenerateUINForFamily(request.body.villageCode).then(async (UIN) => {
+    if(!UIN || UIN === ""){
+      return response.status(400).send("Village code not found")
+    }
     // iterate on request body to add UIn manually and save it to the database
     const familyMemberData = request.body.familyMemberData;
 
