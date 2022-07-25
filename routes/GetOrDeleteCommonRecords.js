@@ -29,7 +29,7 @@ router.get("/individualData", AuthMobile, async (request, response) => {
 
 });
 
-router.get("/deleteFamilyData", AuthMobile, async (request, response) => {
+router.post("/deleteFamilyData", AuthMobile, async (request, response) => {
     const id = request.body.id
     FamilyDataModel.findByIdAndDelete(id, function (err, docs) {
         if (err){
@@ -44,7 +44,7 @@ router.get("/deleteFamilyData", AuthMobile, async (request, response) => {
 
 });
 
-router.get("/deleteCommunityData", AuthMobile, async (request, response) => {
+router.post("/deleteCommunityData", AuthMobile, async (request, response) => {
     const id = request.body.id
     CommunityBuildingModel.findByIdAndDelete(id, function (err, docs) {
         if (err){
