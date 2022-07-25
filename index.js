@@ -8,7 +8,7 @@ const IndividualData = require("./routes/IndiDataCollect");
 const UserInfo = require("./routes/userInfo");
 const ChangeUserPassword = require("./routes/ChangeUserPassword");
 const AddCommunityBuilding = require("./routes/CommunityBuildings");
-const GetCommonRecords = require("./routes/GetCommonRecords");
+const GetCommonRecords = require("./routes/GetOrDeleteCommonRecords");
 const app = Express();
 
 app.use(Express.json());
