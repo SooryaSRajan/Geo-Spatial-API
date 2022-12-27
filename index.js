@@ -9,7 +9,11 @@ const UserInfo = require("./routes/userInfo");
 const ChangeUserPassword = require("./routes/ChangeUserPassword");
 const AddCommunityBuilding = require("./routes/CommunityBuildings");
 const GetCommonRecords = require("./routes/GetOrDeleteCommonRecords");
+const fs = require("fs");
+const https = require("https");
 const app = Express();
+const privateKey = fs.readFileSync( 'key.pem' );
+const certificate = fs.readFileSync( 'csr.pem' );
 
 app.use(Express.json());
 
@@ -33,6 +37,8 @@ app.get("/", (request, response) => {
 
 const PORT = process.env.PORT || 2000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(PORT);
+
