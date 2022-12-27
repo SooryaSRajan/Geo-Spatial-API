@@ -12,8 +12,8 @@ const GetCommonRecords = require("./routes/GetOrDeleteCommonRecords");
 const fs = require("fs");
 const https = require("https");
 const app = Express();
-const privateKey = fs.readFileSync( 'key.pem' );
-const certificate = fs.readFileSync( 'csr.pem' );
+const privateKey = fs.readFileSync( './key.pem' );
+const certificate = fs.readFileSync( './csr.pem' );
 
 app.use(Express.json());
 
