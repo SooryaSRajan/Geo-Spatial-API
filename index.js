@@ -38,7 +38,7 @@ app.get("/", (request, response) => {
 const PORT = process.env.PORT || 2000;
 
 https.createServer({
-    key: privateKey,
-    cert: certificate
+    key: privateKey.replace(/\\n/g, '\n'),
+    cert: certificate.replace(/\\n/g, '\n')
 }, app).listen(PORT);
 
